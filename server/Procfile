@@ -1,1 +1,1 @@
-rest: node express/index.js $PORT
+rest: pm2 start express/index.js --instances 1 --name "REST" -- $PORT
