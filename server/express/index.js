@@ -1,11 +1,58 @@
-// Load express
+// Loading dependencies
+// --------------------
+
+// Express
 var express = require('express');
+
+// Middleware
+var morgan          = require('morgan'),
+    bodyParser      = require('body-parser'),
+    methodOverride  = require('method-override'),
+    cookieParser    = require('cookie-parser'),
+    flash           = require('connect-flash'),
+    csrf            = require('csurf');
+
+// Configuration
+var config = require('./config.js');
+
+// ....
+// ----
 
 // Instantiate application
 var app = express();
 
-// Load config from file
-var config = require('./config.js');
+// Setup middleware
+// ----------------
+
+// #### Logging to stdout ####
+
+// Add logging support, with `'dev'` for colors
+app.use(morgan('dev'));
+
+// #### Parse `request` data ####
+
+// Parse request bodies, both **json** and **urlencoded**
+app.use(bodyParser());
+
+// More *verbose* HTTP methods faking, for `PUT` and `DELETE` support
+app.use(methodOverride());
+
+// #### Sessions ####
+
+// Initialize cookie parser
+app.use(cookieParser(config.secret.session));
+
+
+// #### Misc. ####
+
+// flash data
+app.use(flash());
+
+// anti-forgery middleware
+app.use(csrf({ cookie: true }));
+
+
+
 
 app.get('/', function(req, res){
 	res.json('Hello');
