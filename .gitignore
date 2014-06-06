@@ -1,0 +1,11 @@
+tmp/
+
+node_modules/
+
+lib-cov
+*.seed
+*.log
+*.dat
+*.out
+*.pid
+*.env
