@@ -10,7 +10,8 @@ var morgan          = require('morgan'),
     methodOverride  = require('method-override'),
     cookieParser    = require('cookie-parser'),
     flash           = require('connect-flash'),
-    csrf            = require('csurf');
+    csrf            = require('csurf'),
+    session         = require('express-session');
 
 // Configuration
 var config = require('./config.js');
@@ -39,9 +40,20 @@ app.use(methodOverride());
 
 // #### Sessions ####
 
+var sessionOptions = {
+        name: 'sid',
+        proxy: true,
+        cookie: { 
+            httpOnly: true, 
+            secure: true 
+        }  
+    };
+
 // Initialize cookie parser
 app.use(cookieParser(config.secret.session));
 
+// Load session middleware
+app.use(session(sessionOptions));
 
 // #### Misc. ####
 
@@ -49,13 +61,14 @@ app.use(cookieParser(config.secret.session));
 app.use(flash());
 
 // anti-forgery middleware
-app.use(csrf({ cookie: true }));
+app.use(csrf());
 
 
 
 
 app.get('/', function(req, res){
-	res.json('Hello');
+    console.log(req.session);
+    res.json('Hello');
 });
 
 // Start the server
