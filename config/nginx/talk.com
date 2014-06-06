@@ -4,9 +4,9 @@ upstream express {
   server 127.0.0.1:9002 down;
 }
 
+
 server {
-  listen 0.0.0.0:80;
-  listen 0.0.0.0:443;
+  listen  443 ssl;
 
   ssl                  on; 
   ssl_certificate      /etc/nginx/certs/talk.crt;
@@ -45,4 +45,13 @@ server {
   }
 
   gzip_static on;
+}
+
+server {
+    listen   80;
+    listen   [::]:80;
+
+    server_name .talk.com;
+
+    return 301 https://$server_name$request_uri;
 }
