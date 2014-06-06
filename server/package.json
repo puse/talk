@@ -1,0 +1,11 @@
+{
+  "name": "talk-server",
+  "version": "0.0.0",
+  "description": "Server-side for chat app.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mushex Antaranian",
+  "license": "ISC"
+}

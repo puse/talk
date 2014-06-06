@@ -1,0 +1,4 @@
+User-Agent: *
+Disallow: /auth
+
+Sitemap: http://chat.com/sitemap.xml
