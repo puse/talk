@@ -1,0 +1,1 @@
+rest: nodemon express/index.js --watch express --delay 500ms -- $PORT
