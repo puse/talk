@@ -43,18 +43,12 @@ app.use(methodOverride());
 
 // #### Sessions ####
 
-var sessionOptions = {
-        name: 'sid',
-        proxy: true,
-        cookie: { 
-            httpOnly: true, 
-            secure: true 
-        },
-        store: new RedisStore({ url: config.redis })
-    };
+var sessionOptions = config.session;
+
+sessionOptions.store = new RedisStore({ url: config.redis });
 
 // Initialize cookie parser
-app.use(cookieParser(config.secret.session));
+app.use(cookieParser());
 
 // Load session middleware
 app.use(session(sessionOptions));
