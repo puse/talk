@@ -4,7 +4,7 @@
   "description": "Server-side for chat app.",
   "main": "index.js",
   "scripts": {
-  	"start": "foreman start -p 9000 -c rest=2",
+  	"start": "foreman start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Mushex Antaranian",
