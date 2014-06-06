@@ -1,0 +1,14 @@
+{
+  "name": "talk-express",
+  "version": "0.0.0",
+  "description": "REST server for chat on top of Express.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mushex Antaranian",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.4.1"
+  }
+}
