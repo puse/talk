@@ -6,6 +6,16 @@ upstream express {
 
 server {
   listen 0.0.0.0:80;
+  listen 0.0.0.0:443;
+
+  ssl                  on; 
+  ssl_certificate      /etc/nginx/certs/talk.crt;
+  ssl_certificate_key  /etc/nginx/certs/talk.key;
+
+  ssl_ciphers ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:DHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES128-SHA;
+  ssl_prefer_server_ciphers on;
+
+  keepalive_timeout   70;
 
   server_name .talk.com;
 
