@@ -13,6 +13,9 @@ var morgan          = require('morgan'),
     csrf            = require('csurf'),
     session         = require('express-session');
 
+// Session store
+var RedisStore      = require('connect-redis')(session);
+
 // Configuration
 var config = require('./config.js');
 
@@ -46,7 +49,8 @@ var sessionOptions = {
         cookie: { 
             httpOnly: true, 
             secure: true 
-        }  
+        },
+        store: new RedisStore({ url: config.redis })
     };
 
 // Initialize cookie parser
