@@ -19,11 +19,13 @@ var RedisStore      = require('connect-redis')(session);
 // Configuration
 var config = require('./config.js');
 
-// ....
-// ----
-
 // Instantiate application
+// -----------------------
+
 var app = express();
+
+app.enable('trust proxy');
+app.disable('x-powered-by');
 
 // Setup middleware
 // ----------------
@@ -61,7 +63,33 @@ app.use(flash());
 // anti-forgery middleware
 app.use(csrf());
 
+// on regular requests, supply CSRF token and FLASH data to locals
+app.use(function(req, res, next){
+    if (req.xhr) return next();
 
+    // supply FLASH data
+    res.locals.errors = req.flash('errors').pop();
+    res.locals.inputs = req.flash('inputs').pop();
+
+    // make token visible in templates
+    res.locals._csrf = req.csrfToken();
+
+    next();
+});
+
+// Security headers, as suggested at Recx post and implemented in `helmet` lib
+// Check: 
+// - <http://recxltd.blogspot.com/2012/03/seven-web-server-http-headers-that.html>
+// - <https://www.owasp.org/index.php/List_of_useful_HTTP_headers>
+
+app.use(function(req, res, next){
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('X-FRAME-OPTIONS', 'SAMEORIGIN');
+    res.setHeader('X-XSS-Protection', '1; mode=block');
+    res.setHeader('Strict-Transport-Security', 'max-age=15768000');
+
+    next();
+});
 
 
 app.get('/', function(req, res){
